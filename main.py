@@ -1,3 +1,27 @@
+def calculate_balanced_dish(str):
+    '''
+    This function is used to calculate the balanced dish count based on
+    supplied menu. example if supplied string value is SPSSPP the output should be 2
+    :return: <int> Output of balanced dish
+    '''
+    arr = [char for char in str]  #Convert the string into charcter array
+    counter = 0
+    item_count = len(arr)
+    balanced_dish = 0
+
+    # Loop through length of character array and check is adjacent elements are same,
+    # pop them from array and increment the balanced dish count
+    while counter < item_count:
+        if (counter > 0 and arr[counter] != arr[counter - 1]):
+            for c in range(0, counter):
+                arr.pop(0)
+                arr.pop(0)
+            item_count = len(arr)
+            balanced_dish += 1
+            counter = 0
+        counter += 1
+    return balanced_dish
+
 def process_line_record(str):
     '''
     This is helper function to process line information from input and prompts file.
@@ -19,7 +43,7 @@ def readFromInputFile(filename="inputPS6.txt"):
         if filename == "inputPS6.txt":
             for line in lines:
                 processed_array = process_line_record(line)
-                print_to_output = print_to_output + processed_array.pop() + '\n'
+                print_to_output = print_to_output + str(calculate_balanced_dish(processed_array[0])) + '\n'
             writeToOutputFile(print_to_output)
 
 def writeToOutputFile(str,operation="input" ,filename="outputPS6.txt"):
